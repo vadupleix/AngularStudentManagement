@@ -1,10 +1,34 @@
 <div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid rounded"></span>
-    </div>
-    <div class="col-md-9">
-        <h1 class="display-4">欢迎来到九章全栈课程</h1>
+    <div class="col-md-12">
+        <h1 class="display-8">Ship Information Search</h1>
 
+        <style>
+            table, th , td  {
+                border: 1px solid grey;
+                border-collapse: collapse;
+                padding: 5px;
+            }
+            table tr:nth-child(odd) {
+                background-color: #b3d4fc;
+            }
+            table tr:nth-child(even) {
+                background-color: #ffffff;
+            }
+        </style>
+        <table mat-table striped="true">
+            <tr>
+                <th>Ship Name</th>
+                <th>Ship Type</th>
+                <th>Country</th>
+                <th>TPK</th>
+            </tr>
+            <tr>
+                <th>test1</th>
+                <th>1233333</th>
+                <th>222222</th>
+                <th>0123e3nkrfk2</th>
+            </tr>
+        </table>
         <!--<div [ngSwitch]="isAuthenticated()">-->
             <!--<div class="alert alert-success" *ngSwitchCase="true">-->
                 <!--<span *ngIf="account"-->
@@ -27,19 +51,180 @@
             <!--<div>Teacher_ID</div>-->
         <!--</div>-->
 
-        <!--<div *ngFor="let course of courses" style="padding-bottom: 2px">-->
-            <!--<div style="display: flex; width: 100%; height: 40px; justify-content: space-between; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">-->
-                <!--<div style="padding-left: 5px">{{course.courseName}}</div>-->
-                <!--<div>{{course.courseLocation}}</div>-->
-                <!--<div>{{course.courseContent}}</div>-->
-                <!--<div>{{course.teacherId}}</div>-->
-                <!--<button className = "btn-primary"> Sign </button>-->
-            <!--</div>-->
-        <!--</div>-->
-        <div style="width: 180px; height: 100px; border-top: solid; border-bottom: solid; border-left: solid; border-right: solid"> test </div>
 
-        <p>
-            <span>如果你喜欢九章的课程，别忘记加微信哦。</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener">GitHub</a>!
-        </p>
+        <!--<div *ngIf="isAuthenticated()">
+            <hr>
+            <span>课程查询/注册功能 counter{{clickcounter}}</span><button (click)="deleteCourse()">Delete All</button>
+            <hr>
+        <div><span><button (click)="getAllCourses()">显示所有课程</button> <button (click)="clearAllCourses()">清除</button></span></div>
+            <div *ngFor="let course of courses" style="padding-bottom: 2px">
+                <div style="display: flex; width: 100%; height: 40px; justify-content: space-between; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">
+                    <div style="padding-left: 5px">{{course.courseName}}</div>
+                    <div>{{course.courseLocation}}</div>
+                    <div>{{course.courseContent}}</div>
+                    <div>{{course.teacherId}}</div>
+                    <button >注册课程</button>
+                    <button >删除课程</button>
+                 </div>
+            </div>
+        </div>
+
+        <div *ngIf="isAuthenticated()">
+            <hr>
+            <span>LookUp</span>
+            <hr>
+            <div><span><button (click)="getAllCoursesWithTN()">Search</button> <button (click)="clearAllCourses()">Clear</button></span></div>
+            <div *ngFor="let course of coursesWithTN" style="padding-bottom: 2px">
+                <div style="display: flex; width: 100%; height: 40px; justify-content: space-between; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">
+                    <div style="padding-left: 5px">{{course.courseName}}</div>
+                    <div>{{course.courseLocation}}</div>
+                    <div>{{course.courseContent}}</div>
+                    <div>{{course.teacherName}}</div>
+                </div>
+            </div>
+        </div>
+        <hr>-->
+
+
+
+        <div>
+            <div>
+            <span>
+                Name of the ship: <input type="text" id="name" #name  placeholder="Ship Name..."
+                       class="form-control">
+            </span>
+            </div>
+            <button (click)="findByName(name.value)"> Search </button>
+        </div>
+        <table mat-table striped="true">
+            <thead class="black white-text">
+                <tr>
+                    <th>Ship Name</th>
+                    <th>Ship Type</th>
+                    <th>Country</th>
+                    <th>TPK</th>
+                </tr>
+            </thead>
+            <thead class="grey lighten-1 black-text">
+                <tr *ngFor="let ship of ships">
+                    <th>{{ship.shipName}}</th>
+                    <th>{{ship.type}}</th>
+                    <th>{{ship.country}}</th>
+                    <th>{{ship.tpk}}</th>
+                </tr>
+            </thead>
+        </table>
+        <!--<div *ngFor="let ship of ships" style="padding-bottom: 2px">
+            <div style="display: flex; width: 100%; height: 40px; justify-content: space-between; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">
+                <div style="padding-left: 5px">{{ship.shipName}}</div>
+                <div>{{ship.type}}</div>
+                <div>{{ship.country}}</div>
+                <div>{{ship.tpk}}</div>
+            </div>
+        </div>-->
+
+        <!--<div *ngIf="isAuthenticated()">-->
+            <!--<hr>-->
+            <!--<span>注册功能</span>-->
+            <!--<hr>-->
+            <!--<div><input [ngModel]= "classeNameNeedToReg" ]></div>-->
+            <!--<div><span><button (click)="getAllCoursesWithTN()">注册课程</button> </span></div>-->
+        <!--</div>-->
+
+        <h1 class="display-8">Frequency Search (Type -1 for unknown)</h1>
+
+        <div>
+            <div>
+            <span>
+                Very Low Freq: <input type="number" id="vlf" #vlf  placeholder="Very Low Freq..."
+                                         class="form-control">
+            </span>
+            </div>
+            <div>
+            <span>
+                Low Freq: <input type="number" id="lf" #lf  placeholder="Low Freq..."
+                                      class="form-control">
+            </span>
+            </div>
+            <div>
+            <span>
+                Medium Freq: <input type="number" id="mf" #mf  placeholder="Medium Freq..."
+                                      class="form-control">
+            </span>
+            </div>
+            <div>
+            <span>
+                High Freq: <input type="number" id="hf" #hf  placeholder="High Freq..."
+                                      class="form-control">
+            </span>
+            </div>
+            <div>
+            <span>
+                Very High Freq: <input type="number" id="vhf" #vhf  placeholder="Very High Freq..."
+                                      class="form-control">
+            </span>
+            </div>
+            <button (click)="findByFreq(vlf.value, lf.value, mf.value, hf.value, vhf.value)"> Search </button>
+        </div>
+
+        <table mat-table class="mat-elevation-z8">
+            <thead class="black white-text">
+            <tr>
+                <th>Ship Name</th>
+                <th>Ship Type</th>
+                <th>Country</th>
+                <th>VLF</th>
+                <th>LF</th>
+                <th>MF</th>
+                <th>HF</th>
+                <th>VHF</th>
+                <th>Active Sonar Freq</th>
+                <th>TPK</th>
+                <th>Number of Blades</th>
+            </tr>
+            </thead>
+            <thead class="grey lighten-1 black-text">
+            <tr *ngFor="let ship of ships">
+                <th>{{ship.shipName}}</th>
+                <th>{{ship.type}}</th>
+                <th>{{ship.country}}</th>
+                <th>{{ship.freqVeryLow}}</th>
+                <th>{{ship.freqLow}}</th>
+                <th>{{ship.freqMed}}</th>
+                <th>{{ship.freqHigh}}</th>
+                <th>{{ship.freqVeryHigh}}</th>
+                <th>{{ship.freqActive}}</th>
+                <th>{{ship.tpk}}</th>
+                <th>{{ship.numBlades}}</th>
+            </tr>
+            </thead>
+        </table>
+        <!--<div style="display: flex; width: 100%; height: 40px; justify-content: space-between; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">
+            <div style="padding-left: 5px">Ship Name</div>
+            <div>Type</div>
+            <div>Country</div>
+            <div>Freq_VL</div>
+            <div>Freq_L</div>
+            <div>Freq_M</div>
+            <div>Freq_H</div>
+            <div>Freq_VH</div>
+            <div>Freq_A</div>
+            <div>TPK</div>
+        </div>
+        <div *ngFor="let ship of ships" style="padding-bottom: 2px">
+            <div style="display: flex; width: 100%; height: 40px; justify-content: space-between; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">
+                <div style="padding-left: 5px">{{ship.shipName}}</div>
+                <div>{{ship.type}}</div>
+                <div>{{ship.country}}</div>
+                <div>{{ship.freqVeryLow}}</div>
+                <div>{{ship.freqLow}}</div>
+                <div>{{ship.freqMed}}</div>
+                <div>{{ship.freqHigh}}</div>
+                <div>{{ship.freqVeryHigh}}</div>
+                <div>{{ship.freqActive}}</div>
+                <div>{{ship.tpk}}</div>
+            </div>
+        </div>-->
+
     </div>
 </div>

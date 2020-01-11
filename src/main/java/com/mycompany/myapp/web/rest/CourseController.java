@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
-@Api(value="Course Service Controller", description = "Controller for find couses information")
+@Api(value="Course Service Controller", description = "Controller for find courses information")
 public class CourseController {
     @Autowired
     private CourseService courseService;
@@ -33,6 +33,13 @@ public class CourseController {
     @GetMapping(path = "/api/course/findAllCoursesDto", produces = "application/json")
     public HttpEntity<List<CourseDto>> findAllCoursesDto(){
         List<CourseDto> allCourses = courseService.findAllCoursesDtoFromDB();
+
+        return new ResponseEntity<>(allCourses, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/api/course/findByName/{courseName}", produces = "application/json")
+    public HttpEntity<List<CourseDto>> findByName(@NotNull @PathVariable("courseName") String courseName){
+        List<CourseDto> allCourses = courseService.findByName(courseName);
 
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
@@ -84,6 +91,21 @@ public class CourseController {
         }
     }
 
+
+    /*
+    @DeleteMapping(path = "/api/course/deleteCourse", produces = "application/json")
+    public HttpStatus deleteCourse() {
+        try {
+            courseService.deleteCourse();
+            return HttpStatus.OK;
+        } catch (Exception e) {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+    */
+
+
+
     @DeleteMapping(path = "/api/course/deleteCourse/{courseName}", produces = "application/js")
     public HttpStatus deleteCourse(@NotNull @PathVariable("courseName") String courseName) {
         try {
@@ -94,7 +116,8 @@ public class CourseController {
         }
     }
 
-    @PostMapping(path = "/api/course/addCourseToStudent/{courseName}", produces = "application/js")
+    /*@PostMapping(path = "/api/course/addCourseToStudent/{courseName}", produces = "application/js")
+>>>>>>> Stashed changes
     public HttpStatus addCourseToStudent(@NotNull @PathVariable("courseName") UserCourse userCourse) {
         try {
             courseService.addCourseToStudent(userCourse);
@@ -102,5 +125,6 @@ public class CourseController {
         } catch (Exception e) {
             return HttpStatus.BAD_REQUEST;
         }
-    }
+    }*/
+
 }

@@ -7,16 +7,17 @@ import { CourseWithTNDto } from 'app/shared/model/courseWithTN-dto.model';
 
 @Injectable()
 export class CourseService {
-    private courseAddressUrl = SERVER_API_URL + '/api/course/findAllCoursesDto';
-    private courseAddressWithTNUrl = SERVER_API_URL + '/api/course/findAllCoursesWithTNDto';
+    private courseAddressUrl = SERVER_API_URL + 'api/course/findAllCoursesDto';
+    private courseAddressWithTNUrl = SERVER_API_URL + 'api/course/findAllCoursesWithTNDto';
+    private findByNameUrl = SERVER_API_URL + 'api/course/findByName';
     private courseDeleteUrl = SERVER_API_URL + '/api/course/deleteCourse';
-    private courseUpdateUrl = SERVER_API_URL + '/api/course/updateCourse';
-    private addCourseToStudentUrl = SERVER_API_URL + '/api/course/addCourseToStudent';
+    private courseUpdateUrl = SERVER_API_URL + 'api/course/updateCourse';
+    private addCourseToStudentUrl = SERVER_API_URL + 'api/course/addCourseToStudent';
 
     constructor(private http: HttpClient) {}
 
     getCourseInfo(): Observable<CourseDto[]> {
-        debugger;
+        /*debugger;*/
         return this.http.get<CourseDto[]>(`${this.courseAddressUrl}`);
     }
 
@@ -24,7 +25,13 @@ export class CourseService {
         return this.http.get<CourseWithTNDto[]>(`${this.courseAddressWithTNUrl}`);
     }
 
+    findByName(courseName: String): Observable<CourseDto[]> {
+        return this.http.get<CourseDto[]>(`${this.findByNameUrl}/${courseName}`);
+    }
+
     delete(courseName: String): Observable<Response> {
+        //debugger;
+        //return this.http.delete<Response>(`${this.courseDeleteUrl}`);
         return this.http.delete<Response>(`${this.courseDeleteUrl}/${courseName}`);
     }
 
@@ -32,7 +39,7 @@ export class CourseService {
         return this.http.put<Response>(this.courseUpdateUrl, course);
     }
 
-    addCourseToStudent(courseName: String, currentUserCredential: String) {
-        return this.http.post(SERVER_API_URL + '/api/course/addCourseToStudent', { courseName, currentUserCredential });
-    }
+    /*addCourseToStudent(courseName: String, currentUserCredential: String) {
+        return this.http.post(SERVER_API_URL + 'api/course/addCourseToStudent', { courseName, currentUserCredential });
+    }*/
 }

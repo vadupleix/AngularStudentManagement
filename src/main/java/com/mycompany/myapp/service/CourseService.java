@@ -52,6 +52,10 @@ public class CourseService {
         return courseRepository.findAllCoursesDto();
     }
 
+    public List<CourseDto> findByName(String courseName){
+        return courseRepository.findByName(courseName);
+    }
+
     public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB(){
         return courseRepository.findAllCoursesDtoWithTeacherName();
     }
@@ -93,15 +97,26 @@ public class CourseService {
 
     }
 
+    /*
+    public void deleteCourse(){
+        courseRepository.deleteAll();
+        //try {
+            //courseRepository.delete(OptionalExistingCourse.get());
+        //} catch (Exception e){
+        //    throw new Exception(e.getMessage());
+        //}
+    }
+
+     */
+
     public void deleteCourse(String courseName) throws Exception{
         Optional<Course> OptionalExistingCourse = courseRepository.findCourseByCourseName(courseName);
 
         if(!OptionalExistingCourse.isPresent()){
             throw new Exception("Course is not exist.");
         }
-
         try {
-            courseRepository.delete(OptionalExistingCourse.get());
+        courseRepository.delete(OptionalExistingCourse.get());
         } catch (Exception e){
             throw new Exception(e.getMessage());
         }
@@ -123,7 +138,8 @@ public class CourseService {
 
     }
 
-    public void addCourseToStudent(UserCourse userCourse) throws Exception {
+    /*public void addCourseToStudent(UserCourse userCourse) throws Exception {
+>>>>>>> Stashed changes
 
         Optional<User> curUser = userService.getUserWithAuthorities();
         // 2 find course from course table
@@ -139,5 +155,8 @@ public class CourseService {
         } catch (Exception e){
             throw new Exception(e.getMessage());
         }
+<<<<<<< Updated upstream
     }
+=======
+    }*/
 }

@@ -9,6 +9,7 @@ import { CourseWithTNDto } from 'app/shared/model/courseWithTN-dto.model';
 export class ShipService {
     private findByNameUrl = SERVER_API_URL + 'api/ship/findByName';
     private findByFreqUrl = SERVER_API_URL + 'api/ship/findByFreq';
+    private postShipUrl = SERVER_API_URL + 'api/ship/postShip';
 
     constructor(private http: HttpClient) {}
 
@@ -16,10 +17,49 @@ export class ShipService {
         return this.http.get<Ship[]>(`${this.findByNameUrl}/${shipName}`);
     }
 
-    findByFreq(vlf, lf, mf, hf, vhf): Observable<Ship[]> {
+    findByFreq(arg, acc, count): Observable<Ship[]> {
         //private str = vlf.toString + '%' + lf.toString + '%' + mf.toString + '%' + hf.toString + '%' + vhf.toString;
         return this.http.get<Ship[]>(
-            `${this.findByFreqUrl}/${String(vlf) + '&' + String(lf) + '&' + String(mf) + '&' + String(hf) + '&' + String(vhf)}`
+            `${this.findByFreqUrl}/${arg[0] +
+                '&' +
+                arg[1] +
+                '&' +
+                arg[2] +
+                '&' +
+                arg[3] +
+                '&' +
+                arg[4] +
+                '&' +
+                arg[5] +
+                '&' +
+                acc +
+                '&' +
+                count}`
+        );
+    }
+
+    postShip(argStr, argNum) {
+        const ship: Ship = {
+            id: 0, //never used
+            shipName: argStr[0],
+            country: argStr[1],
+            type: argStr[2],
+            freqVeryLow: Number(argNum[0]),
+            freqLow: Number(argNum[1]),
+            freqMed: Number(argNum[2]),
+            freqHigh: Number(argNum[3]),
+            freqVeryHigh: Number(argNum[4]),
+            freqActive: Number(argNum[5]),
+            tpk: Number(argNum[6]),
+            numBlades: Number(argNum[7])
+        };
+        this.http.post(`${this.postShipUrl}`, ship).subscribe(
+            data => {
+                alert('ok');
+            },
+            error => {
+                console.log(JSON.stringify(error.json()));
+            }
         );
     }
 

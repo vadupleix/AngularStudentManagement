@@ -21,7 +21,10 @@ export class HomeComponent implements OnInit {
     classeNameNeedToReg: string;
 
     courses: CourseDto[] = [];
-    ships: Ship[] = [];
+    ships_name: Ship[] = [];
+    ships_freq: Ship[] = [];
+    country = ['USA', 'Japan'];
+    default_acc = 0.98;
 
     coursesWithTN: CourseWithTNDto[] = [];
 
@@ -88,11 +91,6 @@ export class HomeComponent implements OnInit {
     //    const courseName = 'temp';
     //    this.courseService.addCourseToStudent(courseName, currentUserCredential);
     //}
-    public clickcounter = 0;
-    deleteCourse() {
-        this.clickcounter++;
-        //    this.courseService.delete();
-    }
 
     /*
     findByName(name) {
@@ -110,20 +108,46 @@ export class HomeComponent implements OnInit {
     findByName(name) {
         this.shipService.findByName(name).subscribe(curDto => {
             if (!curDto) {
-                this.ships = [];
+                this.ships_name = [];
             } else {
-                this.ships = curDto;
+                this.ships_name = curDto;
             }
         });
     }
 
-    findByFreq(vlf, lf, mf, hf, vhf) {
-        this.shipService.findByFreq(vlf, lf, mf, hf, vhf).subscribe(curDto => {
+    defaultTo(arr, str) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] == '') {
+                arr[i] = str;
+            }
+        }
+        return arr;
+    }
+
+    findByFreq(vlf, lf, mf, hf, vhf, af, count, acc) {
+        const arg = this.defaultTo([vlf, lf, mf, hf, vhf, af], '-1');
+        if (count == '') {
+            count = 'NA';
+        }
+        if (acc == '' || Number(acc) < 0 || Number(acc) > 1) {
+            acc = this.default_acc;
+        }
+        this.shipService.findByFreq(arg, acc, count).subscribe(curDto => {
             if (!curDto) {
-                this.ships = [];
+                this.ships_freq = [];
             } else {
-                this.ships = curDto;
+                this.ships_freq = curDto;
             }
         });
+    }
+
+    resetFreqSearch() {
+        this.ships_freq = [];
+    }
+
+    postShip(name, count, type, vlf, lf, mf, hf, vhf, af, tpk, num_blades) {
+        const argStr = this.defaultTo([name, count, type], 'NA');
+        const argNum = this.defaultTo([vlf, lf, mf, hf, vhf, af, tpk, num_blades], '-1');
+        this.shipService.postShip(argStr, argNum);
     }
 }

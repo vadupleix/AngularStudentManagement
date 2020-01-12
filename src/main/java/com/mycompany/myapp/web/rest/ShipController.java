@@ -31,17 +31,27 @@ public class ShipController {
 
     @GetMapping(path = "/api/ship/findByFreq/{freqList}", produces = "application/json")
     public HttpEntity<List<Ship>> findByFreq(@NotNull @PathVariable("freqList") String freqList){
-        String[] freq = freqList.split("&", 5);
-        long [] freqN = new long [5];
-        for(int i = 0; i < 5; i++) {
+        String[] freq = freqList.split("&", 8);
+        long [] freqN = new long [6];
+        for(int i = 0; i < 6; i++) {
             freqN[i] = Integer.parseInt(freq[i]);
         }
-
-        List<Ship> allShips = shipService.findByFreq(freqN);
+        double acc = Double.parseDouble(freq[6]);
+        String count = freq[7];
+        List<Ship> allShips = shipService.findByFreq(freqN, acc, count);
 
         return new ResponseEntity<>(allShips, HttpStatus.OK);
     }
 
+    @PostMapping(path = "/api/ship/postShip", produces = "application/json")
+    public HttpStatus postShip(@RequestBody @NotNull Ship ship) {
+        try {
+            shipService.addShip(ship);
+            return HttpStatus.OK;
+        } catch (Exception e) {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
 
 
 }

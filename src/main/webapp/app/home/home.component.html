@@ -9,13 +9,13 @@
                 padding: 5px;
             }
             table tr:nth-child(odd) {
-                background-color: #b3d4fc;
+                background-color: rgba(186, 210, 255, 0.45);
             }
             table tr:nth-child(even) {
-                background-color: #ffffff;
+                background-color: #f0f0f0;
             }
         </style>
-        <table mat-table striped="true">
+        <!--<table mat-table striped="true">
             <tr>
                 <th>Ship Name</th>
                 <th>Ship Type</th>
@@ -28,7 +28,7 @@
                 <th>222222</th>
                 <th>0123e3nkrfk2</th>
             </tr>
-        </table>
+        </table>-->
         <!--<div [ngSwitch]="isAuthenticated()">-->
             <!--<div class="alert alert-success" *ngSwitchCase="true">-->
                 <!--<span *ngIf="account"-->
@@ -84,9 +84,8 @@
             </div>
         </div>
         <hr>-->
-
-
-
+    </div>
+    <div class="col-md-12">
         <div>
             <div>
             <span>
@@ -94,7 +93,11 @@
                        class="form-control">
             </span>
             </div>
-            <button (click)="findByName(name.value)"> Search </button>
+            <section layout="row" layout-align="center center">
+                <button class="btn-primary" (click)="findByName(name.value)">Search</button>
+                <button class="btn-secondary">Reset</button>
+            </section>
+            <!--<button (click)="findByName(name.value)"> Search </button>-->
         </div>
         <table mat-table striped="true">
             <thead class="black white-text">
@@ -106,7 +109,7 @@
                 </tr>
             </thead>
             <thead class="grey lighten-1 black-text">
-                <tr *ngFor="let ship of ships">
+                <tr *ngFor="let ship of ships_name">
                     <th>{{ship.shipName}}</th>
                     <th>{{ship.type}}</th>
                     <th>{{ship.country}}</th>
@@ -131,40 +134,49 @@
             <!--<div><span><button (click)="getAllCoursesWithTN()">注册课程</button> </span></div>-->
         <!--</div>-->
 
-        <h1 class="display-8">Frequency Search (Type -1 for unknown)</h1>
+        <h1 class="display-8">Frequency Search</h1>
 
+        <div class = "flex-container">
+            <span>
+                <input type="string" id="vlf" #vlf  placeholder="Very Low Freq...">
+            </span>
+
+            <span>
+                <input type="string" id="lf" #lf  placeholder="Low Freq...">
+            </span>
+
+            <span>
+                <input type="string" id="mf" #mf  placeholder="Medium Freq...">
+            </span>
+
+            <span>
+                <input type="string" id="hf" #hf  placeholder="High Freq...">
+            </span>
+
+            <span>
+                <input type="string" id="vhf" #vhf  placeholder="Very High Freq...">
+            </span>
+            <span>
+                <input type="string" id="af" #af  placeholder="Active Intercept...">
+            </span>
+            <span>
+                <input type="string" id="count" #count  placeholder="Country...">
+            </span>
+            <span>
+                <input type="string" id="acc" #acc  placeholder="Accuracy, eg,. 0.98...">
+            </span>
+        </div>
         <div>
-            <div>
-            <span>
-                Very Low Freq: <input type="number" id="vlf" #vlf  placeholder="Very Low Freq..."
-                                         class="form-control">
-            </span>
+            <section layout="row" layout-align="center center">
+                <button class="btn-primary" (click)="findByFreq(vlf.value, lf.value, mf.value, hf.value, vhf.value, af.value, count.value,acc.value)">Search</button>
+                <button class="btn-secondary" (click) = "resetFreqSearch()">Reset</button>
+            </section>
+            <!--<div>
+            <button (click)="findByFreq(vlf.value, lf.value, mf.value, hf.value, vhf.value)" type="button" mdbBtn color="primary" mdbWavesEffect> Search </button>
             </div>
             <div>
-            <span>
-                Low Freq: <input type="number" id="lf" #lf  placeholder="Low Freq..."
-                                      class="form-control">
-            </span>
-            </div>
-            <div>
-            <span>
-                Medium Freq: <input type="number" id="mf" #mf  placeholder="Medium Freq..."
-                                      class="form-control">
-            </span>
-            </div>
-            <div>
-            <span>
-                High Freq: <input type="number" id="hf" #hf  placeholder="High Freq..."
-                                      class="form-control">
-            </span>
-            </div>
-            <div>
-            <span>
-                Very High Freq: <input type="number" id="vhf" #vhf  placeholder="Very High Freq..."
-                                      class="form-control">
-            </span>
-            </div>
-            <button (click)="findByFreq(vlf.value, lf.value, mf.value, hf.value, vhf.value)"> Search </button>
+                <button (click)="resetFreqSearch()" type="button" mdbBtn color="light" mdbWavesEffect> Reset </button>
+            </div>-->
         </div>
 
         <table mat-table class="mat-elevation-z8">
@@ -184,7 +196,7 @@
             </tr>
             </thead>
             <thead class="grey lighten-1 black-text">
-            <tr *ngFor="let ship of ships">
+            <tr *ngFor="let ship of ships_freq">
                 <th>{{ship.shipName}}</th>
                 <th>{{ship.type}}</th>
                 <th>{{ship.country}}</th>
@@ -225,6 +237,46 @@
                 <div>{{ship.tpk}}</div>
             </div>
         </div>-->
-
+    </div>
+    <div class="col-md-12">
+        <h1 class="display-8" *jhiHasAnyAuthority="'ROLE_ADMIN'">Post Information</h1>
+        <div>
+            <div>
+                <input type="string" id="nameP" #nameP  placeholder="Ship Name, default as NA...">
+            </div>
+            <div>
+                <input type="string" id="typeP" #typeP  placeholder="Ship Class, default as NA...">
+            </div>
+            <div>
+                <input type="string" id="countP" #countP  placeholder="Country, default as NA...">
+            </div>
+            <div>
+                <input type="string" id="vlfP" #vlfP  placeholder="VLF, default as -1...">
+            </div>
+            <div>
+                <input type="string" id="lfP" #lfP  placeholder="LF, default as -1...">
+            </div>
+            <div>
+                <input type="string" id="mfP" #mfP  placeholder="MF, default as -1...">
+            </div>
+            <div>
+                <input type="string" id="hfP" #hfP  placeholder="HF, default as -1...">
+            </div>
+            <div>
+                <input type="string" id="vhfP" #vhfP  placeholder="VHF, default as -1...">
+            </div>
+            <div>
+                <input type="string" id="afP" #afP  placeholder="Active Sonar Freq, default as -1...">
+            </div>
+            <div>
+                <input type="string" id="TPKP" #tpkP  placeholder="TPK, default as -1...">
+            </div>
+            <div>
+                <input type="string" id="num_bladesP" #num_bladesP  placeholder="Number of Blades, default as -1...">
+            </div>
+            <div>
+                <button (click)="postShip(nameP.value, countP.value, typeP.value, vlfP.value, lfP.value, mfP.value, hfP.value, vhfP.value, afP.value, tpkP.value, num_bladesP.value)"> Post </button>
+            </div>
+        </div>
     </div>
 </div>

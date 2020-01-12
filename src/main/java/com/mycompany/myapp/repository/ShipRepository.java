@@ -39,8 +39,9 @@ public interface ShipRepository extends JpaRepository<Ship, Long> {
         "s.freqMed, s.freqHigh, s.freqVeryHigh, s.freqActive, s.tpk, s.numBlades) from Ship s where " +
         "((least(s.freqVeryLow / ?1, ?1 / s.freqVeryLow ) >= ?6) or (?1 = -1)) and ((least(s.freqLow / ?2, ?2/s.freqLow) >= ?6) or (?2 = -1))" +
         "and ((least(s.freqMed / ?3, ?3/s.freqMed) >= ?6) or (?3 = -1)) and ((least(s.freqHigh / ?4, ?4/s.freqHigh) >= ?6) or (?4 = -1))" +
-        "and ((least(s.freqVeryHigh / ?5, ?5/s.freqVeryHigh) >= ?6) or (?5 = -1))")
-    List<Ship> findByFreq(long vlf, long lf, long mf, long hf, long vhf, double thres);
+        "and ((least(s.freqVeryHigh / ?5, ?5/s.freqVeryHigh) >= ?6) or (?5 = -1)) and ((s.freqActive = ?7) or (?7 = -1))" +
+        " and ((s.country = ?8) or (?8 = 'NA'))")
+    List<Ship> findByFreq(long vlf, long lf, long mf, long hf, long vhf, double thres, long af, String count);
 
 
 }
